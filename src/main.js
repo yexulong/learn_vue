@@ -6,11 +6,15 @@ import './assets/css/global.css'
 import axios from "axios";
 import Mock from "./mock"
 // axios.defaults.baseURL = '';
+axios.interceptors.request.use(config => {
+    console.log(config);
+    return config
+});
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 
 new Vue({
-  router,
-  Mock,
-  render: h => h(App)
+    router,
+    Mock: Mock,
+    render: h => h(App)
 }).$mount('#app')
