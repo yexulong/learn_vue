@@ -7,7 +7,6 @@ import axios from "axios";
 import Mock from "./mock"
 // axios.defaults.baseURL = '';
 axios.interceptors.request.use(config => {
-    console.log(config);
     return config
 });
 Vue.prototype.$http = axios;

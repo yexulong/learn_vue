@@ -17,6 +17,10 @@ files.keys().forEach((key) => {
 configArray.forEach((item) => {
     for (let [path, target] of Object.entries(item)) {
         let protocol = path.split('|');
-        Mock.mock(new RegExp('^' + protocol[1]), protocol[0], target);
+        Mock.mock(new RegExp('^' + protocol[1]), protocol[0], function (option){
+            console.log(option);
+            console.log(target);
+            return Mock.mock(target)
+        });
     }
 });
