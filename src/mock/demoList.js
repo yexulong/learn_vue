@@ -122,9 +122,197 @@ let userList = {
 
     }
 };
+
+let rightList = {
+    "data": [
+        {
+            id: 101,
+            "authName": "商品管理",
+            level: '0',
+            path: 'goods',
+            pid: '0'
+        },
+        {
+            id: 102,
+            "authName": "订单管理",
+            level: '0',
+            path: 'orders',
+            pid: '0'
+        },
+        {
+            id: 103,
+            "authName": "权限管理",
+            level: '0',
+            path: 'rights',
+            pid: '0'
+        },
+        {
+            id: 104,
+            "authName": "商品列表",
+            level: '1',
+            path: 'goods',
+            pid: '0'
+        },
+        {
+            id: 105,
+            "authName": "添加商品",
+            level: '2',
+            path: 'goods',
+            pid: '0'
+        }
+    ],
+    meta: {
+        msg: "获取权限列表成功",
+        status: 200,
+    },
+};
+let rightTree = {
+    data: [
+        {
+            id: 101,
+            authName: "商品管理",
+            path: null,
+            children: [
+                {
+                    id: 104,
+                    authName: "商品列表",
+                    path: null,
+                    children: [
+                        {
+                            id: 105,
+                            authName: "添加商品",
+                            path: null,
+                        }
+                    ]
+                },
+                {
+                    id: 124,
+                    authName: "商品分类",
+                    path: null,
+                    children: [
+                        {
+                            id: 135,
+                            authName: "添加分类",
+                            path: null,
+                        },
+                        {
+                            id: 136,
+                            authName: "删除分类",
+                            path: null,
+                        }
+                    ]
+                }
+            ]
+        },
+    ],
+    meta: {
+        msg: "获取权限树成功",
+        status: 200,
+    },
+};
+let roleList = {
+    data: [
+        {
+            id: 30,
+            roleName: "主管",
+            roleDesc: "技术负责人",
+            children: [
+                {
+                    id: 101,
+                    authName: "商品管理",
+                    path: null,
+                    children: [
+                        {
+                            id: 104,
+                            authName: "商品列表",
+                            path: null,
+                            children: [
+                                {
+                                    id: 105,
+                                    authName: "添加商品",
+                                    path: null,
+                                }
+                            ]
+                        },
+                        {
+                            id: 124,
+                            authName: "商品分类",
+                            path: null,
+                            children: [
+                                {
+                                    id: 135,
+                                    authName: "添加分类",
+                                    path: null,
+                                },
+                                {
+                                    id: 136,
+                                    authName: "删除分类",
+                                    path: null,
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 201,
+                    authName: "订单管理",
+                    path: null,
+                    children: [
+                        {
+                            id: 204,
+                            authName: "订单列表",
+                            path: null,
+                            children: [
+                                {
+                                    id: 205,
+                                    authName: "添加订单",
+                                    path: null,
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+        },
+        {
+            id: 40,
+            roleName: "测试角色",
+            roleDesc: "测试角色描述",
+            children: [
+                {
+                    id: 101,
+                    authName: "商品管理",
+                    path: null,
+                    children: [
+                        {
+                            id: 104,
+                            authName: "商品列表",
+                            path: null,
+                            children: [
+                                {
+                                    id: 105,
+                                    authName: "添加商品",
+                                    path: null,
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+        }
+    ],
+    meta: {
+        msg: "获取角色列表成功",
+        status: 200,
+    },
+};
+
 export default {
     'post|login':  successList,
     'get|menus': menuList,
     'get|users': userList,
-    'get|users?query=&pagenum=1&pagesize=2': userList
+    'get|users?query=&pagenum=1&pagesize=2': userList,
+    'get|rights/list': rightList,
+    'get|rights/tree': rightTree,
+    'get|roles': roleList,
 }

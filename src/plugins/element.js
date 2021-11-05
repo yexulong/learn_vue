@@ -28,6 +28,10 @@ import {
     Checkbox,
     CheckboxGroup,
     Option,
+    Tag,
+    MessageBox,
+    Dialog,
+    Tree,
 } from "element-ui"
 
 Vue.use(Button);
@@ -56,4 +60,8 @@ Vue.use(Select);
 Vue.use(Checkbox);
 Vue.use(CheckboxGroup);
 Vue.use(Option);
+Vue.use(Tag);
+Vue.use(Dialog);
+Vue.use(Tree);
 Vue.prototype.$message = Message;
+Vue.prototype.$confirm = MessageBox.confirm;
