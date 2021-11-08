@@ -110,7 +110,7 @@ let userList = {
                 email: '@EMAIL',
                 create_time: '@datetime',
                 mg_state: '@boolean',
-                role_name: "超级管理员"
+                "role_name|1": ["超级管理员", "测试角色"]
             }
         ]
     },
