@@ -65,7 +65,7 @@ let menuList = {
                 {
                     id: 304,
                     authName: "商品分类",
-                    path: null,
+                    path: "categories",
                     children: []
                 }
             ]
@@ -166,6 +166,7 @@ let rightList = {
         status: 200,
     },
 };
+
 let rightTree = {
     data: [
         {
@@ -210,6 +211,7 @@ let rightTree = {
         status: 200,
     },
 };
+
 let roleList = {
     data: [
         {
@@ -307,6 +309,45 @@ let roleList = {
     },
 };
 
+let categoriesList = {
+    data: {
+        pagenum: 1,
+        pagesiz: 5,
+        total: 4,
+        "result|4": [
+            {
+                "cat_id|+1": 1,
+                "cat_name": '@string(lower, 5)',
+                "cat_pid": 0,
+                "cat_level": 0,
+                "cat_delete|1": [false, true],
+                "children": [
+                    {
+                        "cat_id|+1": 5,
+                        "cat_name": '@string(lower, 5)',
+                        "cat_pid": 1,
+                        "cat_level": 1,
+                        "cat_delete|1": [false, true],
+                        "children": [
+                                {
+                                    "cat_id|+1": 6,
+                                    "cat_name": '@string(lower, 5)',
+                                    "cat_pid": 2,
+                                    "cat_level": 2,
+                                    "cat_delete|1": [false, true],
+                                }
+                        ],
+                    }
+                ],
+            }
+        ]
+    },
+    meta: {
+        msg: "获取商品分类列表成功",
+        status: 200,
+    },
+};
+
 export default {
     'post|login':  successList,
     'get|menus': menuList,
@@ -315,4 +356,5 @@ export default {
     'get|rights/list': rightList,
     'get|rights/tree': rightTree,
     'get|roles': roleList,
+    'get|categories': categoriesList,
 }
