@@ -348,6 +348,38 @@ let categoriesList = {
     },
 };
 
+let categoriesList2 = {
+    data: {
+        pagenum: 1,
+        pagesiz: 5,
+        total: 4,
+        "result|4": [
+            {
+                "cat_id|+1": 1,
+                "cat_name": '@string(lower, 5)',
+                "cat_pid": 0,
+                "cat_level": 0,
+                "cat_delete|1": [false, true],
+                "children": [
+                    {
+                        "cat_id|+1": 5,
+                        "cat_name": '@string(lower, 5)',
+                        "cat_pid": 1,
+                        "cat_level": 1,
+                        "cat_delete|1": [false, true],
+                        "children": [
+                        ],
+                    }
+                ],
+            }
+        ]
+    },
+    meta: {
+        msg: "获取商品分类列表成功",
+        status: 200,
+    },
+};
+
 let categoriesPost = {
     data: {
         'cat_id|+1': 62,
@@ -369,6 +401,7 @@ export default {
     'get|rights/list': rightList,
     'get|rights/tree': rightTree,
     'get|roles': roleList,
+    'get|categories.*type=2': categoriesList2,
     'get|categories': categoriesList,
     'post|categories': categoriesPost,
 }

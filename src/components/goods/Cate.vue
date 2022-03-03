@@ -136,7 +136,9 @@
                             trigger: 'blur',
                         }
                     ]
-                }
+                },
+                // 父级分类的列表
+                parentCateList: []
             }
         },
         created() {
@@ -145,7 +147,7 @@
         methods: {
             // 获取商品的分类数据
             async getCateList() {
-                const {data: res} = await this.$http.get('categories', { params: this.queryInfo })
+                const {data: res} = await this.$http.get('categories', { params: this.queryInfo });
                 if (res.meta.status !== 200) {
                     return this.$message.error('获取商品分类失败')
                 }
@@ -166,9 +168,20 @@
 
             },
             // 点击按钮，展示添加分类的对话框
-            showAddCateDialog(){
-              this.addCateDialogVisible = true;
+            showAddCateDialog() {
+                // 先获取父级分类的数据
+                this.getParentCateList();
+                this.addCateDialogVisible = true;
             },
+            // 获取父级分类的数据列表
+            async getParentCateList() {
+                const {data: res} = await this.$http.get('categories', { params: { type: 2 } })
+                if (res.meta.status !== 200) {
+                    return this.$message.error('获取父级分类失败')
+                }
+                console.log(res.data);
+                this.parentCateList = res.data;
+            }
         }
     }
 </script>
