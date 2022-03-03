@@ -69,7 +69,16 @@
                     <el-input v-model="addCateForm.cat_name"/>
                 </el-form-item>
                 <el-form-item label="父级分类: ">
-
+                    <!-- options指定数据源 -->
+                    <el-cascader
+                        v-model="selectedKeys"
+                        :options="parentCateList"
+                        :props="cascaderProps"
+                        @change="parentCateChanged"
+                        clearable
+                        change-on-select
+                    >
+                    </el-cascader>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -138,7 +147,17 @@
                     ]
                 },
                 // 父级分类的列表
-                parentCateList: []
+                parentCateList: [],
+                // 指定级联选择器配置对象
+                cascaderProps: {
+                    expandTrigger: 'hover',
+                    checkStrictly: 'true',
+                    value: 'cat_id',
+                    label: 'cat_name',
+                    children: 'children',
+                },
+                // 选中的父级分类的Id数组
+                selectedKeys: []
             }
         },
         created() {
@@ -175,19 +194,27 @@
             },
             // 获取父级分类的数据列表
             async getParentCateList() {
-                const {data: res} = await this.$http.get('categories', { params: { type: 2 } })
+                const {data: res} = await this.$http.get('categories', { params: { type: 2 } });
                 if (res.meta.status !== 200) {
                     return this.$message.error('获取父级分类失败')
                 }
                 console.log(res.data);
-                this.parentCateList = res.data;
-            }
+                this.parentCateList = res.data.result;
+            },
+            // 选择项发生变化时触发这个函数
+            parentCateChanged() {
+                console.log(this.selectedKeys)
+            },
         }
     }
 </script>
 
 <style scoped>
-.treeTable{
-    margin-top: 15px;
-}
+    .treeTable{
+        margin-top: 15px;
+    }
+
+    .el-cascader {
+        width: 100%;
+    }
 </style>

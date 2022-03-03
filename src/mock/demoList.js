@@ -317,21 +317,21 @@ let categoriesList = {
         "result|4": [
             {
                 "cat_id|+1": 1,
-                "cat_name": '@string(lower, 5)',
+                "cat_name": '@cword(3, 5)',
                 "cat_pid": 0,
                 "cat_level": 0,
                 "cat_delete|1": [false, true],
                 "children": [
                     {
                         "cat_id|+1": 5,
-                        "cat_name": '@string(lower, 5)',
+                        "cat_name": '@cword(3, 5)',
                         "cat_pid": 1,
                         "cat_level": 1,
                         "cat_delete|1": [false, true],
                         "children": [
                                 {
                                     "cat_id|+1": 6,
-                                    "cat_name": '@string(lower, 5)',
+                                    "cat_name": '@cword(3, 5)',
                                     "cat_pid": 2,
                                     "cat_level": 2,
                                     "cat_delete|1": [false, true],
@@ -356,19 +356,17 @@ let categoriesList2 = {
         "result|4": [
             {
                 "cat_id|+1": 1,
-                "cat_name": '@string(lower, 5)',
+                "cat_name": '@cword(3, 5)',
                 "cat_pid": 0,
                 "cat_level": 0,
                 "cat_delete|1": [false, true],
                 "children": [
                     {
                         "cat_id|+1": 5,
-                        "cat_name": '@string(lower, 5)',
+                        "cat_name": '@cword(3, 5)',
                         "cat_pid": 1,
                         "cat_level": 1,
                         "cat_delete|1": [false, true],
-                        "children": [
-                        ],
                     }
                 ],
             }

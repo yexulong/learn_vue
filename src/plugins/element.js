@@ -32,6 +32,7 @@ import {
     MessageBox,
     Dialog,
     Tree,
+    Cascader,
 } from "element-ui"
 
 Vue.use(Button);
@@ -63,5 +64,6 @@ Vue.use(Option);
 Vue.use(Tag);
 Vue.use(Dialog);
 Vue.use(Tree);
+Vue.use(Cascader);
 Vue.prototype.$message = Message;
 Vue.prototype.$confirm = MessageBox.confirm;
