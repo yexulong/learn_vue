@@ -62,6 +62,7 @@
             title="添加分类"
             :visible.sync="addCateDialogVisible"
             width="50%"
+            @close="addCateDialogClosed"
         >
             <!-- 添加分类的表单 -->
             <el-form :model="addCateForm" :rules="addCateFormRules" ref="addCateFormRef" label-width="100px" class="demo-ruleForm">
@@ -220,6 +221,14 @@
             // 点击按钮，添加新的分类
             addCate() {
                 console.log(this.addCateForm);
+                this.addCateDialogVisible = false
+            },
+            // 监听添加分类对话框的关闭事件,重置表单数据
+            addCateDialogClosed() {
+                this.$refs.addCateFormRef.resetFields();
+                this.selectedKeys = [];
+                this.addCateForm.cat_level = 0;
+                this.addCateForm.cat_pid = 0;
             }
         }
     }
