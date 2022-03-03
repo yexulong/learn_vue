@@ -76,14 +76,13 @@
                         :props="cascaderProps"
                         @change="parentCateChanged"
                         clearable
-                        change-on-select
                     >
                     </el-cascader>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
             <el-button @click="addCateDialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addCateDialogVisible = false">确 定</el-button>
+            <el-button type="primary" @click="addCate">确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -203,8 +202,25 @@
             },
             // 选择项发生变化时触发这个函数
             parentCateChanged() {
-                console.log(this.selectedKeys)
+                console.log(this.selectedKeys);
+                // 如果 selectedKeys 数组中的 length 大于0，证明选中的是父级分类
+                // 反之，就说明没有选中任何父级分类
+                if (this.selectedKeys.length > 0) {
+                    // 父级分类Id
+                    this.addCateForm.cat_pid = this.selectedKeys[this.selectedKeys.length - 1];
+                    // 为当前分类的等级赋值
+                    this.addCateForm.cat_level = this.selectedKeys.length;
+                }else{
+                    // 父级分类Id
+                    this.addCateForm.cat_pid = 0;
+                    // 为当前分类的等级赋值
+                    this.addCateForm.cat_level = 0;
+                }
             },
+            // 点击按钮，添加新的分类
+            addCate() {
+                console.log(this.addCateForm);
+            }
         }
     }
 </script>
