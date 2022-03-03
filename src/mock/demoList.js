@@ -348,6 +348,19 @@ let categoriesList = {
     },
 };
 
+let categoriesPost = {
+    data: {
+        'cat_id|+1': 62,
+        "cat_name": '@string(lower, 5)',
+        "cat_pid|1-2": '@integer(1, 9)',
+        "cat_level|1": [0, 1, 2],
+    },
+    meta: {
+        msg: "创建成功",
+        status: 201,
+    },
+};
+
 export default {
     'post|login':  successList,
     'get|menus': menuList,
@@ -357,4 +370,5 @@ export default {
     'get|rights/tree': rightTree,
     'get|roles': roleList,
     'get|categories': categoriesList,
+    'post|categories': categoriesPost,
 }
