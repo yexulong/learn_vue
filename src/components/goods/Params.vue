@@ -18,8 +18,21 @@
                 <el-col>
                     <span>选择的商品分类: </span>
                     <!-- 选择商品分类的级联选择框 -->
+                    <el-cascader
+                        v-model="selectCateKeys"
+                        :options="cateList"
+                        :props="cateProps"
+                        @change="handleChange"
+                    >
+                    </el-cascader>
                 </el-col>
             </el-row>
+
+            <!--  -->
+            <el-tabs v-model="activeName" @tab-click="handleTabClick">
+                <el-tab-pane label="动态参数" name="first">动态参数</el-tab-pane>
+                <el-tab-pane label="静态属性" name="second">静态属性</el-tab-pane>
+            </el-tabs>
         </el-card>
     </div>
 </template>
@@ -29,7 +42,18 @@
         name: "Params",
         data() {
             return {
-                cateList: []
+                cateList: [],
+                // 级联选择框的配置对象
+                cateProps: {
+                    expandTrigger: 'hover',
+                    value: 'cat_id',
+                    label: 'cat_name',
+                    children: 'children',
+                },
+                // 级联选择框双向绑定到的数组
+                selectCateKeys: [],
+                // 被激活的页签的名称
+                activeName: 'first'
             }
         },
         created() {
@@ -45,6 +69,14 @@
 
                 this.cateList = res.data.result;
                 console.log(this.cateList)
+            },
+            // 级联选择框选中项变化，触发这个函数
+            handleChange() {
+                console.log(this.selectCateKeys)
+            },
+            // Tab页签点击事件的处理函数
+            handleTabClick() {
+                console.log(this.activeName)
             }
         },
     }
