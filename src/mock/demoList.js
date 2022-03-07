@@ -391,6 +391,19 @@ let categoriesPost = {
     },
 };
 
+let categoriesAttrList = {
+    data: {
+        'attr_id|+1': 3077,
+        "attr_name": '@cword(3, 5)',
+        "attr_pid|1-2": '@integer(1, 9)',
+        "attr_level|1": [0, 1, 2],
+    },
+    meta: {
+        msg: "获取成功",
+        status: 200,
+    },
+};
+
 export default {
     'post|login':  successList,
     'get|menus': menuList,
@@ -400,6 +413,8 @@ export default {
     'get|rights/tree': rightTree,
     'get|roles': roleList,
     'get|categories.*type=2': categoriesList2,
+    'get|categories/.*/attributes': categoriesAttrList,
     'get|categories': categoriesList,
     'post|categories': categoriesPost,
+
 }

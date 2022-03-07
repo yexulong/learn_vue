@@ -93,7 +93,16 @@
                 console.log(this.cateList)
             },
             // 级联选择框选中项变化，触发这个函数
-            async handleChange() {
+            handleChange() {
+                this.getParamsData();
+            },
+            // Tab页签点击事件的处理函数
+            handleTabClick() {
+                console.log(this.activeName);
+                this.getParamsData();
+            },
+            // 获取参数的列表数据
+            async getParamsData() {
                 console.log(this.selectCateKeys);
                 // 根据所选分类的id，和当前所处的面板，获取对应的参数
                 const {data: res} = await this.$http.get(`categories/${this.cateId}/attributes`,
@@ -104,10 +113,6 @@
                     return this.$message.error('获取参数列表失败！')
                 }
                 console.log(res.data)
-            },
-            // Tab页签点击事件的处理函数
-            handleTabClick() {
-                console.log(this.activeName)
             }
         },
     }
