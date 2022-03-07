@@ -23,15 +23,24 @@
                         :options="cateList"
                         :props="cateProps"
                         @change="handleChange"
+                        clearable
                     >
                     </el-cascader>
                 </el-col>
             </el-row>
 
-            <!--  -->
+            <!-- tab 页签区域 -->
             <el-tabs v-model="activeName" @tab-click="handleTabClick">
-                <el-tab-pane label="动态参数" name="first">动态参数</el-tab-pane>
-                <el-tab-pane label="静态属性" name="second">静态属性</el-tab-pane>
+                <!-- 添加动态参数的面板 -->
+                <el-tab-pane label="动态参数" name="first">
+                    <!-- 添加参数的按钮 -->
+                    <el-button type="primary" size="mini" :disabled="isBtnDisabled">添加参数</el-button>
+                </el-tab-pane>
+                <!-- 添加静态属性的面板 -->
+                <el-tab-pane label="静态属性" name="second">
+                    <!-- 添加属性的按钮 -->
+                    <el-button type="primary" size="mini" :disabled="isBtnDisabled">添加属性</el-button>
+                </el-tab-pane>
             </el-tabs>
         </el-card>
     </div>
@@ -58,6 +67,12 @@
         },
         created() {
             this.getCateList();
+        },
+        computed: {
+            // 如果按钮需要被禁用，则返回true,否则返回false
+            isBtnDisabled() {
+                return this.selectCateKeys.length !== 3;
+            }
         },
         methods: {
             // 获取所有的商品分类
