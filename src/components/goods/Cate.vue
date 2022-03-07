@@ -41,7 +41,7 @@
                 </template>
                 <!-- 操作 -->
                 <template slot="opt" slot-scope="scope">
-                    <el-button type="primary" icon="el-icon-edit" size="mini" v-if="scope.row">编辑</el-button>
+                    <el-button type="primary" icon="el-icon-edit" size="mini" v-if="scope.row" @click="showEditCateDialog(scope.row)">编辑</el-button>
                     <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
                 </template>
             </tree-table>
@@ -84,6 +84,58 @@
             <span slot="footer" class="dialog-footer">
             <el-button @click="addCateDialogVisible = false">取 消</el-button>
             <el-button type="primary" @click="addCate">确 定</el-button>
+            </span>
+        </el-dialog>
+
+        <!-- 编辑分类的对话框 -->
+        <el-dialog
+            title="编辑分类"
+            :visible.sync="setEditCateDialogVisible"
+            width="50%"
+            @close="setEditCateDialogClosed"
+        >
+            <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="100px">
+                <el-form-item label="分类名称" prop="cat_name">
+                    <el-input v-model="editForm.cat_name"/>
+                </el-form-item>
+                <el-form-item label="分类是否有效" prop="cat_delete">
+                    <el-switch
+                         :value="!editForm.cat_delete"
+                        @change="editForm.cat_delete=!editForm.cat_delete"
+                    >
+                    </el-switch>
+                </el-form-item>
+                <el-form-item label="排序" prop="cat_level">
+                    <el-select v-model="editForm.cat_level" placeholder="请选择">
+                        <el-option label="一级" :value="0">
+                            <el-tag size="mini">一级</el-tag>
+                        </el-option>
+                        <el-option label="二级" :value="1">
+                            <el-tag type="success" size="mini">二级</el-tag>
+                        </el-option>
+                        <el-option label="三级" :value="2">
+                            <el-tag type="warning" size="mini">三级</el-tag>
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="分类父id" prop="cat_pid">
+                    <el-input v-model="editForm.cat_pid"/>
+                </el-form-item>
+                <el-form-item label="父级分类: ">
+                    <!-- options指定数据源 -->
+                    <el-cascader
+                        v-model="selectedKeys"
+                        :options="parentCateList"
+                        :props="cascaderProps"
+                        @change="parentCateChanged"
+                        clearable
+                    >
+                    </el-cascader>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="setEditCateDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="saveCate">确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -157,7 +209,13 @@
                     children: 'children',
                 },
                 // 选中的父级分类的Id数组
-                selectedKeys: []
+                selectedKeys: [],
+                // 控制编辑分类对话框的显示与隐藏
+                setEditCateDialogVisible: false,
+                // 需要编辑的分类信息
+                editForm: [],
+                //
+                editFormRules: {},
             }
         },
         created() {
@@ -170,7 +228,6 @@
                 if (res.meta.status !== 200) {
                     return this.$message.error('获取商品分类失败')
                 }
-                console.log(res.data);
                 // 把数据列表赋值给分类列表
                 this.cateList = res.data.result;
                 this.total = res.data.total;
@@ -203,7 +260,6 @@
             },
             // 选择项发生变化时触发这个函数
             parentCateChanged() {
-                console.log(this.selectedKeys);
                 // 如果 selectedKeys 数组中的 length 大于0，证明选中的是父级分类
                 // 反之，就说明没有选中任何父级分类
                 if (this.selectedKeys.length > 0) {
@@ -220,8 +276,21 @@
             },
             // 点击按钮，添加新的分类
             addCate() {
-                console.log(this.addCateForm);
-                this.addCateDialogVisible = false
+                this.$refs.addCateFormRef.validate(async valid => {
+                   if (!valid) return;
+                    const {data: res} = await this.$http.post('categories', this.addCateForm)
+
+                    if(res.meta.status !== 201){
+                        this.addCateDialogVisible = false;
+                        return this.$message.error('添加分类失败！')
+
+                    }
+
+                    this.$message.success('添加分类成功！');
+                    this.getCateList();
+                    this.addCateDialogVisible = false
+                });
+
             },
             // 监听添加分类对话框的关闭事件,重置表单数据
             addCateDialogClosed() {
@@ -229,6 +298,24 @@
                 this.selectedKeys = [];
                 this.addCateForm.cat_level = 0;
                 this.addCateForm.cat_pid = 0;
+            },
+            // 监听编辑分类对话框的关闭事件
+            setEditCateDialogClosed() {
+
+            },
+            // 保存编辑分类
+            saveCate() {
+
+            },
+            // 显示编辑分类对话框
+            showEditCateDialog(cate) {
+                this.editForm = cate;
+                // 先获取父级分类的数据
+                this.getParentCateList();
+                console.log(this.editForm.cat_pid);
+                this.selectedKeys.push(this.editForm.cat_pid);
+                console.log(cate);
+                this.setEditCateDialogVisible = true;
             }
         }
     }
