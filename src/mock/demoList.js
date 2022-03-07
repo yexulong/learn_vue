@@ -59,7 +59,7 @@ let menuList = {
                 {
                     id: 303,
                     authName: "分类参数",
-                    path: null,
+                    path: "params",
                     children: []
                 },
                 {
