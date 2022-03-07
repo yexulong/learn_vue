@@ -29,14 +29,23 @@
         name: "Params",
         data() {
             return {
-
+                cateList: []
             }
         },
         created() {
-
+            this.getCateList();
         },
         methods: {
+            // 获取所有的商品分类
+            async getCateList() {
+                const {data: res} = await this.$http.get('categories');
+                if(res.meta.status !== 200) {
+                    this.$message.error('获取商品分类失败')
+                }
 
+                this.cateList = res.data.result;
+                console.log(this.cateList)
+            }
         },
     }
 </script>
