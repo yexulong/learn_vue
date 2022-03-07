@@ -62,7 +62,11 @@
                 // 级联选择框双向绑定到的数组
                 selectCateKeys: [],
                 // 被激活的页签的名称
-                activeName: 'many'
+                activeName: 'many',
+                // 动态参数的数据
+                manyTabData: [],
+                // 静态属性的数据
+                onlyTabData: [],
             }
         },
         created() {
@@ -112,7 +116,12 @@
                 if(res.meta.status !== 200) {
                     return this.$message.error('获取参数列表失败！')
                 }
-                console.log(res.data)
+                console.log(res.data);
+                if(this.activeName === 'many'){
+                    this.manyTabData = res.data;
+                }else{
+                    this.onlyTabData = res.data
+                }
             }
         },
     }
