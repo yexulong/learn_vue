@@ -32,12 +32,12 @@
             <!-- tab 页签区域 -->
             <el-tabs v-model="activeName" @tab-click="handleTabClick">
                 <!-- 添加动态参数的面板 -->
-                <el-tab-pane label="动态参数" name="first">
+                <el-tab-pane label="动态参数" name="many">
                     <!-- 添加参数的按钮 -->
                     <el-button type="primary" size="mini" :disabled="isBtnDisabled">添加参数</el-button>
                 </el-tab-pane>
                 <!-- 添加静态属性的面板 -->
-                <el-tab-pane label="静态属性" name="second">
+                <el-tab-pane label="静态属性" name="only">
                     <!-- 添加属性的按钮 -->
                     <el-button type="primary" size="mini" :disabled="isBtnDisabled">添加属性</el-button>
                 </el-tab-pane>
@@ -62,7 +62,7 @@
                 // 级联选择框双向绑定到的数组
                 selectCateKeys: [],
                 // 被激活的页签的名称
-                activeName: 'first'
+                activeName: 'many'
             }
         },
         created() {
@@ -72,6 +72,13 @@
             // 如果按钮需要被禁用，则返回true,否则返回false
             isBtnDisabled() {
                 return this.selectCateKeys.length !== 3;
+            },
+            // 当前选中的三级分类的id
+            cateId() {
+                if(this.selectCateKeys.length === 3){
+                    return this.selectCateKeys[2]
+                }
+                return null
             }
         },
         methods: {
@@ -86,8 +93,17 @@
                 console.log(this.cateList)
             },
             // 级联选择框选中项变化，触发这个函数
-            handleChange() {
-                console.log(this.selectCateKeys)
+            async handleChange() {
+                console.log(this.selectCateKeys);
+                // 根据所选分类的id，和当前所处的面板，获取对应的参数
+                const {data: res} = await this.$http.get(`categories/${this.cateId}/attributes`,
+                    {
+                        params: {sel: this.activeName}
+                    });
+                if(res.meta.status !== 200) {
+                    return this.$message.error('获取参数列表失败！')
+                }
+                console.log(res.data)
             },
             // Tab页签点击事件的处理函数
             handleTabClick() {
