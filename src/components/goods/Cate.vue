@@ -250,13 +250,15 @@
                 this.addCateDialogVisible = true;
             },
             // 获取父级分类的数据列表
-            async getParentCateList() {
-                const {data: res} = await this.$http.get('categories', { params: { type: 2 } });
-                if (res.meta.status !== 200) {
+            getParentCateList() {
+                // const {data: res} = this.$http.get('categories', { params: { type: 2 } });
+                this.$http.get('categories', { params: { type: 2 } }).then(res=>{
+                    if (res.data.meta.status !== 200) {
                     return this.$message.error('获取父级分类失败')
-                }
-                console.log(res.data);
-                this.parentCateList = res.data.result;
+                    }
+                    this.parentCateList = res.data.data.result;
+                })
+
             },
             // 选择项发生变化时触发这个函数
             parentCateChanged() {
