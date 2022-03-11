@@ -392,12 +392,12 @@ let categoriesPost = {
 };
 
 let categoriesAttrList = {
-    data: {
+    "data|1-4": [{
         'attr_id|+1': 3077,
         "attr_name": '@cword(3, 5)',
         "attr_pid|1-2": '@integer(1, 9)',
         "attr_level|1": [0, 1, 2],
-    },
+    }],
     meta: {
         msg: "获取成功",
         status: 200,

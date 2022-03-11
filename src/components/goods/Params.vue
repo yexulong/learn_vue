@@ -35,11 +35,41 @@
                 <el-tab-pane label="动态参数" name="many">
                     <!-- 添加参数的按钮 -->
                     <el-button type="primary" size="mini" :disabled="isBtnDisabled">添加参数</el-button>
+                    <!-- 动态参数表格 -->
+                    <el-table :data="manyTabData" border stripe>
+                        <!-- 展开行 -->
+                        <el-table-column type="expand"></el-table-column>
+                        <!-- 索引列 -->
+                        <el-table-column type="index"></el-table-column>
+                        <el-table-column label="参数名称" prop="attr_name"></el-table-column>
+                        <el-table-column label="操作">
+                            <template slot-scope="scope">
+                                <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
+                                <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
+                                {{scope.row}}
+                            </template>
+                        </el-table-column>
+                    </el-table>
                 </el-tab-pane>
                 <!-- 添加静态属性的面板 -->
                 <el-tab-pane label="静态属性" name="only">
                     <!-- 添加属性的按钮 -->
                     <el-button type="primary" size="mini" :disabled="isBtnDisabled">添加属性</el-button>
+                    <!-- 静态参数表格 -->
+                    <el-table :data="onlyTabData" border stripe>
+                        <!-- 展开行 -->
+                        <el-table-column type="expand"></el-table-column>
+                        <!-- 索引列 -->
+                        <el-table-column type="index"></el-table-column>
+                        <el-table-column label="属性名称" prop="attr_name"></el-table-column>
+                        <el-table-column label="操作">
+                            <template slot-scope="scope">
+                                <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
+                                <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
+                                {{scope.row}}
+                            </template>
+                        </el-table-column>
+                    </el-table>
                 </el-tab-pane>
             </el-tabs>
         </el-card>
