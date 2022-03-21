@@ -404,6 +404,21 @@ let categoriesAttrList = {
     },
 };
 
+let categoriesPost2 = {
+    "data": [{
+        'attr_id|+1': 3077,
+        "attr_name": '@cword(3, 5)',
+        "cat_id|1-1": '@integer(1, 9)',
+        "attr_sel|1": ['many', 'only'],
+        "attr_write": 'list',
+        "attr_vals|1": '@word(1, 1),@word(1, 1)',
+    }],
+    meta: {
+        msg: "添加成功",
+        status: 201,
+    }
+};
+
 export default {
     'post|login':  successList,
     'get|menus': menuList,
@@ -415,6 +430,6 @@ export default {
     'get|categories.*type=2': categoriesList2,
     'get|categories/.*/attributes': categoriesAttrList,
     'get|categories': categoriesList,
+    'post|categories/.*/attributes': categoriesPost2,
     'post|categories': categoriesPost,
-
 }
