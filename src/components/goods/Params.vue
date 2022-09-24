@@ -44,7 +44,7 @@
                         <el-table-column label="参数名称" prop="attr_name"></el-table-column>
                         <el-table-column label="操作">
                             <template slot-scope="scope">
-                                <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog">编辑</el-button>
+                                <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row)">编辑</el-button>
                                 <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
                                 {{scope.row}}
                             </template>
@@ -64,7 +64,7 @@
                         <el-table-column label="属性名称" prop="attr_name"></el-table-column>
                         <el-table-column label="操作">
                             <template slot-scope="scope">
-                                <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog">编辑</el-button>
+                                <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row)">编辑</el-button>
                                 <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
                                 {{scope.row}}
                             </template>
@@ -248,8 +248,9 @@
                 });
             },
             // 点击按钮，展示修改对话框
-            showEditDialog() {
-                this.editDialogVisible =  true
+            showEditDialog(row) {
+                this.editForm = Object.assign({}, row);
+                this.editDialogVisible =  true;
             },
             // 重置修改的表单
             editDialogClosed() {
@@ -257,7 +258,20 @@
             },
             // 点击按钮，修改参数信息
             editParams() {
-
+                this.$refs.editFormRef.validate(valid => {
+                    if (!valid) return
+                    this.$http.post(`categories/${this.cateId}/attributes/${this.editForm.attr_id}`, {
+                        attr_name: this.editForm.attr_name,
+                        attr_sel: this.activeName
+                    }).then(response => {
+                        if (response.data.meta.status !== 200) {
+                            return this.$message.error('修改参数失败！')
+                        }
+                        this.$message.success('修改参数成功！');
+                        this.getParamsData();
+                        this.editDialogVisible = false;
+                    })
+                })
             }
         },
     }
