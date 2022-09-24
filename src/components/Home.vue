@@ -7,11 +7,12 @@
                 <span>后台管理系统</span>
             </div>
             <el-container>
-                <el-menu class="el-menu-demo"
-                         mode="horizontal"
-                         background-color="#373d41"
-                         text-color="#fff"
-                         active-text-color="#ffd04b"
+                <el-menu
+                    class="el-menu-demo"
+                    mode="horizontal"
+                    background-color="#373d41"
+                    text-color="#fff"
+                    active-text-color="#ffd04b"
                 >
                     <el-submenu index="2">
                         <template slot="title">我的工作台</template>
