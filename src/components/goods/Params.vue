@@ -45,15 +45,15 @@
                                 </el-tag>
                                 <el-input
                                     class="input-new-tag"
-                                    v-if="inputVisible"
-                                    v-model="inputValue"
+                                    v-if="scope.row.inputVisible"
+                                    v-model="scope.row.inputValue"
                                     ref="saveTagInput"
                                     size="small"
-                                    @keyup.enter.native="handleInputConfirm"
-                                    @blur="handleInputConfirm"
+                                    @keyup.enter.native="handleInputConfirm(scope.row)"
+                                    @blur="handleInputConfirm(scope.row)"
                                 >
                                 </el-input>
-                                <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+                                <el-button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</el-button>
                             </template>
                         </el-table-column>
                         <!-- 索引列 -->
@@ -248,6 +248,11 @@
                     return this.$message.error('获取参数列表失败！')
                 }
                 console.log(res.data);
+                res.data.forEach(item => {
+                    item.inputVisible = false;
+                    item.inputValue = ''
+                });
+
                 if(this.activeName === 'many'){
                     this.manyTabData = res.data;
                 }else{
@@ -327,12 +332,12 @@
                 });
             },
             // 文本框失去焦点或enter都会触发
-            handleInputConfirm() {
-                this.inputVisible = false
+            handleInputConfirm(row) {
+                row.inputVisible = false
             },
             // 点击tag按钮展示文本输入框
-            showInput() {
-                this.inputVisible = true;
+            showInput(row) {
+                row.inputVisible = true;
                 this.$nextTick(() => {
                     this.$refs.saveTagInput.$refs.input.focus();
                 });
