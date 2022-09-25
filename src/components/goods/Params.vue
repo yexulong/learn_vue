@@ -24,6 +24,7 @@
                         :props="cateProps"
                         @change="handleChange"
                         clearable
+
                     >
                     </el-cascader>
                 </el-col>
@@ -255,7 +256,13 @@
             },
             // 获取参数的列表数据
             async getParamsData() {
-                console.log(this.selectCateKeys);
+                console.log("selectCateKeys:", this.selectCateKeys);
+                if (this.selectCateKeys.length !== 3) {
+                    this.selectCateKeys = []
+                    this.onlyTabData = []
+                    this.manyTabData = []
+                    return
+                }
                 // 根据所选分类的id，和当前所处的面板，获取对应的参数
                 const {data: res} = await this.$http.get(`categories/${this.cateId}/attributes`,
                     {
