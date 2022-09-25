@@ -340,6 +340,12 @@
             },
             // 文本框失去焦点或enter都会触发
             handleInputConfirm(row) {
+                if (row.inputValue.trim().length === 0){
+                    row.inputValue = '';
+                    row.inputVisible = false;
+                    return
+                }
+                // 需要发送请求
                 row.inputVisible = false
             },
             // 点击tag按钮展示文本输入框
