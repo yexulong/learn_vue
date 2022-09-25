@@ -80,6 +80,17 @@
                                 <el-tag v-for="(item, i) in scope.row.attr_vals" :key="i" closable>
                                     {{ item }}
                                 </el-tag>
+                                <el-input
+                                    class="input-new-tag"
+                                    v-if="scope.row.inputVisible"
+                                    v-model="scope.row.inputValue"
+                                    ref="saveTagInput"
+                                    size="small"
+                                    @keyup.enter.native="handleInputConfirm(scope.row)"
+                                    @blur="handleInputConfirm(scope.row)"
+                                >
+                                </el-input>
+                                <el-button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</el-button>
                             </template>
                         </el-table-column>
                         <!-- 索引列 -->
@@ -186,10 +197,6 @@
                         }
                     ]
                 },
-                // 控制tag按钮与文本框的显示与隐藏
-                inputVisible: false,
-                // 文本框中输入的内容
-                inputValue: '',
             }
         },
         created() {
@@ -338,6 +345,7 @@
             // 点击tag按钮展示文本输入框
             showInput(row) {
                 row.inputVisible = true;
+                // $nextTick: 当页面上的元素被重新渲染之后，才会调用指定回调函数
                 this.$nextTick(() => {
                     this.$refs.saveTagInput.$refs.input.focus();
                 });
