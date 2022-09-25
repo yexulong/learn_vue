@@ -45,7 +45,7 @@
                         <el-table-column label="操作">
                             <template slot-scope="scope">
                                 <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row)">编辑</el-button>
-                                <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
+                                <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeParams(scope.row.attr_id)">删除</el-button>
                                 {{scope.row}}
                             </template>
                         </el-table-column>
@@ -65,7 +65,7 @@
                         <el-table-column label="操作">
                             <template slot-scope="scope">
                                 <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row)">编辑</el-button>
-                                <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
+                                <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeParams(scope.row.attr_id)">删除</el-button>
                                 {{scope.row}}
                             </template>
                         </el-table-column>
@@ -272,6 +272,32 @@
                         this.editDialogVisible = false;
                     })
                 })
+            },
+            // 根据id，删除对应的参数项
+            removeParams(attr_id) {
+                this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$http.delete(`categories/${this.cateId}/attributes/${attr_id}`).then(response => {
+                        if (response.data.meta.status !== 200) {
+                            return this.$message.error('删除参数失败！')
+                        }
+
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        });
+
+                        this.getParamsData();
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
             }
         },
     }

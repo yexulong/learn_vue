@@ -434,6 +434,13 @@ let categoriesPost3 = {
     }
 };
 
+let categoriesList4 = {
+    "data": null,
+    meta: {
+        msg: "删除成功",
+        status: 200,
+    }
+};
 export default {
     'post|login':  successList,
     'get|menus': menuList,
@@ -448,4 +455,5 @@ export default {
     'post|categories/.*/attributes/.*': categoriesPost3,
     'post|categories/.*/attributes': categoriesPost2,
     'post|categories': categoriesPost,
+    'delete|categories/.*/attributes/.*': categoriesList4,
 }
