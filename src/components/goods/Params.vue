@@ -43,6 +43,17 @@
                                 <el-tag v-for="(item, i) in scope.row.attr_vals" :key="i" closable>
                                     {{ item }}
                                 </el-tag>
+                                <el-input
+                                    class="input-new-tag"
+                                    v-if="inputVisible"
+                                    v-model="inputValue"
+                                    ref="saveTagInput"
+                                    size="small"
+                                    @keyup.enter.native="handleInputConfirm"
+                                    @blur="handleInputConfirm"
+                                >
+                                </el-input>
+                                <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
                             </template>
                         </el-table-column>
                         <!-- 索引列 -->
@@ -175,6 +186,10 @@
                         }
                     ]
                 },
+                // 控制tag按钮与文本框的显示与隐藏
+                inputVisible: false,
+                // 文本框中输入的内容
+                inputValue: '',
             }
         },
         created() {
@@ -310,6 +325,17 @@
                         message: '已取消删除'
                     });
                 });
+            },
+            // 文本框失去焦点或enter都会触发
+            handleInputConfirm() {
+                this.inputVisible = false
+            },
+            // 点击tag按钮展示文本输入框
+            showInput() {
+                this.inputVisible = true;
+                this.$nextTick(() => {
+                    this.$refs.saveTagInput.$refs.input.focus();
+                });
             }
         },
     }
@@ -321,5 +347,16 @@
     }
     .el-tag {
         margin: 5px;
+    }
+    .button-new-tag {
+        margin-left: 5px;
+        height: 32px;
+        line-height: 30px;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .input-new-tag {
+        width: 90px;
+        margin-left: 5px;
     }
 </style>
