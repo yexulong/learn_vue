@@ -395,6 +395,7 @@ let categoriesAttrList = {
     "data|1-4": [{
         'attr_id|+1': 3077,
         "attr_name": '@cword(3, 5)',
+        "attr_vals|5-6": ['@cword(3, 5)'],
         "attr_pid|1-2": '@integer(1, 9)',
         "attr_level|1": [0, 1, 2],
     }],
@@ -434,7 +435,7 @@ let categoriesPost3 = {
     }
 };
 
-let categoriesList4 = {
+let categoriesDelete = {
     "data": null,
     meta: {
         msg: "删除成功",
@@ -455,5 +456,5 @@ export default {
     'post|categories/.*/attributes/.*': categoriesPost3,
     'post|categories/.*/attributes': categoriesPost2,
     'post|categories': categoriesPost,
-    'delete|categories/.*/attributes/.*': categoriesList4,
+    'delete|categories/.*/attributes/.*': categoriesDelete,
 }

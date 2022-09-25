@@ -38,7 +38,13 @@
                     <!-- 动态参数表格 -->
                     <el-table :data="manyTabData" border stripe>
                         <!-- 展开行 -->
-                        <el-table-column type="expand"></el-table-column>
+                        <el-table-column type="expand">
+                            <template slot-scope="scope">
+                                <el-tag v-for="(item, i) in scope.row.attr_vals" :key="i" closable>
+                                    {{ item }}
+                                </el-tag>
+                            </template>
+                        </el-table-column>
                         <!-- 索引列 -->
                         <el-table-column type="index"></el-table-column>
                         <el-table-column label="参数名称" prop="attr_name"></el-table-column>
@@ -58,7 +64,13 @@
                     <!-- 静态参数表格 -->
                     <el-table :data="onlyTabData" border stripe>
                         <!-- 展开行 -->
-                        <el-table-column type="expand"></el-table-column>
+                        <el-table-column type="expand">
+                            <template slot-scope="scope">
+                                <el-tag v-for="(item, i) in scope.row.attr_vals" :key="i" closable>
+                                    {{ item }}
+                                </el-tag>
+                            </template>
+                        </el-table-column>
                         <!-- 索引列 -->
                         <el-table-column type="index"></el-table-column>
                         <el-table-column label="属性名称" prop="attr_name"></el-table-column>
@@ -306,5 +318,8 @@
 <style lang="less" scoped>
     .cat_opt {
         margin: 15px 0;
+    }
+    .el-tag {
+        margin: 5px;
     }
 </style>
