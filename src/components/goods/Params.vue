@@ -40,7 +40,12 @@
                         <!-- 展开行 -->
                         <el-table-column type="expand">
                             <template slot-scope="scope">
-                                <el-tag v-for="(item, i) in scope.row.attr_vals" :key="i" closable>
+                                <el-tag
+                                    v-for="(item, i) in scope.row.attr_vals"
+                                    :key="i"
+                                    closable
+                                    @close="handleDelete(i, scope.row)"
+                                >
                                     {{ item }}
                                 </el-tag>
                                 <el-input
@@ -77,7 +82,12 @@
                         <!-- 展开行 -->
                         <el-table-column type="expand">
                             <template slot-scope="scope">
-                                <el-tag v-for="(item, i) in scope.row.attr_vals" :key="i" closable>
+                                <el-tag
+                                    v-for="(item, i) in scope.row.attr_vals"
+                                    :key="i"
+                                    closable
+                                    @close="handleDelete(i, scope.row)"
+                                >
                                     {{ item }}
                                 </el-tag>
                                 <el-input
@@ -349,12 +359,14 @@
                 row.attr_vals.push(row.inputValue.trim());
                 row.inputValue = '';
                 row.inputVisible = false;
+                this.saveAttrVals(row)
+            },
+            saveAttrVals(row) {
                 this.$http.put(`categories/${this.cateId}/attributes/${row.attr_id}`, {
                     attr_name: row.attr_name,
                     attr_sel: row.attr_sel,
                     attr_vals: row.attr_vals
                 }).then(response => {
-                    console.log(response)
                     if (response.data.meta.status !== 200){
                         return this.$message.error('修改参数失败！')
                     }
@@ -368,6 +380,11 @@
                 this.$nextTick(() => {
                     this.$refs.saveTagInput.$refs.input.focus();
                 });
+            },
+            // 删除对应的参数tag
+            handleDelete(i, row) {
+                row.attr_vals.splice(i);
+                this.saveAttrVals(row)
             }
         },
     }
