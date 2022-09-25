@@ -346,7 +346,20 @@
                     return
                 }
                 // 需要发送请求
-                row.inputVisible = false
+                row.attr_vals.push(row.inputValue.trim());
+                row.inputValue = '';
+                row.inputVisible = false;
+                this.$http.put(`categories/${this.cateId}/attributes/${row.attr_id}`, {
+                    attr_name: row.attr_name,
+                    attr_sel: row.attr_sel,
+                    attr_vals: row.attr_vals
+                }).then(response => {
+                    console.log(response)
+                    if (response.data.meta.status !== 200){
+                        return this.$message.error('修改参数失败！')
+                    }
+                    this.$message.success('修改参数成功！');
+                })
             },
             // 点击tag按钮展示文本输入框
             showInput(row) {

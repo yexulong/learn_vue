@@ -412,7 +412,7 @@ let categoriesPost2 = {
         "cat_id|1-1": '@integer(1, 9)',
         "attr_sel|1": ['many', 'only'],
         "attr_write": 'list',
-        "attr_vals|1": '@word(1, 1),@word(1, 1)',
+        "attr_vals|0-6": ['@cword(3, 10)'],
     }],
     meta: {
         msg: "添加成功",
@@ -427,7 +427,7 @@ let categoriesPost3 = {
         "cat_id|1-1": '@integer(1, 9)',
         "attr_sel|1": ['many', 'only'],
         "attr_write": 'manual',
-        "attr_vals|1": '@word(1, 1),@word(1, 1)',
+        "attr_vals|0-6": ['@cword(3, 10)'],
     }],
     meta: {
         msg: "添加成功",
@@ -442,6 +442,22 @@ let categoriesDelete = {
         status: 200,
     }
 };
+
+let categoriesPut = {
+    "data": [{
+        'attr_id|+1': 3077,
+        "attr_name": '@cword(3, 5)',
+        "cat_id|1-1": '@integer(1, 9)',
+        "attr_sel|1": ['many', 'only'],
+        "attr_write": 'manual',
+        "attr_vals|0-6": ['@cword(3, 10)'],
+    }],
+    meta: {
+        msg: "修改成功",
+        status: 200,
+    }
+};
+
 export default {
     'post|login':  successList,
     'get|menus': menuList,
@@ -457,4 +473,9 @@ export default {
     'post|categories/.*/attributes': categoriesPost2,
     'post|categories': categoriesPost,
     'delete|categories/.*/attributes/.*': categoriesDelete,
+    'put|categories/.*/attributes/.*': (p) => {
+        Object.assign(categoriesPut.data[0], JSON.parse(p.body))
+        // categoriesPut.data[0].attr_vals = JSON.parse(p.body).attr_vals;
+        return categoriesPut
+    },
 }
